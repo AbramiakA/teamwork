@@ -10,7 +10,9 @@ from aiogram import F
 logging.basicConfig(level=logging.INFO)
 
 # Токен бота (отримайте у @BotFather)
-BOT_TOKEN = "8339845737:AAHpUNfSwmk1KOewN1KoRfsOlRYTapHJ1gM"
+import os
+
+BOT_TOKEN = os.getenv("BOT_TOKEN", "YOUR_BOT_TOKEN_HERE")
 
 # Ініціалізація бота та диспетчера
 bot = Bot(token=BOT_TOKEN)

@@ -1,5 +1,6 @@
 import asyncio
 import logging
+import os
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import CommandStart
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
@@ -9,10 +10,14 @@ from aiogram import F
 # Налаштування логування
 logging.basicConfig(level=logging.INFO)
 
-# Токен бота (отримайте у @BotFather)
-import os
+# Токен бота (отримується з змінних середовища або вставляється напряму)
+BOT_TOKEN = os.getenv("BOT_TOKEN") or "YOUR_BOT_TOKEN_HERE"
 
-BOT_TOKEN = os.getenv("BOT_TOKEN", "YOUR_BOT_TOKEN_HERE")
+# Перевірка токена
+if BOT_TOKEN == "YOUR_BOT_TOKEN_HERE":
+    print("❌ ПОМИЛКА: Не встановлено токен бота!")
+    print("Встановіть змінну BOT_TOKEN в Railway або замініть YOUR_BOT_TOKEN_HERE на ваш токен")
+    exit(1)
 
 # Ініціалізація бота та диспетчера
 bot = Bot(token=BOT_TOKEN)
@@ -198,6 +203,7 @@ async def contact_trainer(callback: types.CallbackQuery):
 async def main():
     """Запуск бота"""
     print("🤖 Бот запускається...")
+    print(f"🔑 Токен встановлено: {'Так' if BOT_TOKEN != 'YOUR_BOT_TOKEN_HERE' else 'Ні'}")
     await dp.start_polling(bot)
 
 if __name__ == "__main__":

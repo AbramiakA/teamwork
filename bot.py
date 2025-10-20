@@ -76,6 +76,26 @@ TRAINERS = {
     }
 }
 
+def create_main_menu():
+    """Створює головне меню з кнопками тренажерів"""
+    keyboard = InlineKeyboardBuilder()
+    
+    # Додаємо кнопки з номерами тренажерів
+    for number, equipment in EQUIPMENT.items():
+        keyboard.add(InlineKeyboardButton(
+            text=f"{number}. {equipment['name']}",
+            callback_data=f"equipment_{number}"
+        ))
+    
+    # Додаємо кнопку для запису до тренера
+    keyboard.add(InlineKeyboardButton(
+        text="👨‍💼 Записатись до тренера",
+        callback_data="book_trainer"
+    ))
+    
+    keyboard.adjust(1)  # По одній кнопці в рядку
+    return keyboard
+
 @dp.message(CommandStart())
 async def start_command(message: types.Message):
     """Обробка команди /start"""
@@ -84,16 +104,31 @@ async def start_command(message: types.Message):
         "Цей бот допоможе вам:\n"
         "• Правильно виконувати вправи на тренажерах\n"
         "• Зв'язатися з досвідченим тренером\n\n"
-        "Введіть номер тренажера, щоб отримати інструкції 👇"
+        "Оберіть тренажер зі списку або введіть його номер:"
     )
     
-    await message.answer(welcome_text)
+    keyboard = create_main_menu()
+    
+    await message.answer(
+        welcome_text,
+        reply_markup=keyboard.as_markup()
+    )
+
+@dp.callback_query(F.data.startswith("equipment_"))
+async def handle_equipment_button(callback: types.CallbackQuery):
+    """Обробка натискання на кнопку тренажера"""
+    equipment_number = callback.data.replace("equipment_", "")
+    await show_equipment_info(callback.message, equipment_number, is_callback=True)
+    await callback.answer()
 
 @dp.message(F.text)
 async def handle_equipment_number(message: types.Message):
     """Обробка введеного номера тренажера"""
     equipment_number = message.text.strip()
-    
+    await show_equipment_info(message, equipment_number, is_callback=False)
+
+async def show_equipment_info(message, equipment_number, is_callback=False):
+    """Показує інформацію про тренажер"""
     if equipment_number in EQUIPMENT:
         equipment = EQUIPMENT[equipment_number]
         
@@ -119,23 +154,46 @@ async def handle_equipment_number(message: types.Message):
             f"Натисніть кнопку нижче, щоб переглянути відео з правильною технікою виконання:"
         )
         
-        await message.answer(
-            response_text,
-            reply_markup=keyboard.as_markup(),
-            parse_mode="Markdown"
-        )
+        if is_callback:
+            await message.edit_text(
+                response_text,
+                reply_markup=keyboard.as_markup(),
+                parse_mode="Markdown"
+            )
+        else:
+            await message.answer(
+                response_text,
+                reply_markup=keyboard.as_markup(),
+                parse_mode="Markdown"
+            )
     else:
-        await message.answer(
+        error_text = (
             "❌ Тренажер з таким номером не знайдено.\n"
             "Будь ласка, введіть номер ще раз.\n\n"
             f"Доступні тренажери: {', '.join(EQUIPMENT.keys())}"
         )
+        
+        if is_callback:
+            await message.edit_text(error_text)
+        else:
+            await message.answer(error_text)
 
 @dp.callback_query(F.data == "back_to_start")
 async def back_to_start(callback: types.CallbackQuery):
     """Повернення до початку"""
+    welcome_text = (
+        "🏋️‍♂️ Вітаємо в нашому спортивному залі!\n\n"
+        "Цей бот допоможе вам:\n"
+        "• Правильно виконувати вправи на тренажерах\n"
+        "• Зв'язатися з досвідченим тренером\n\n"
+        "Оберіть тренажер зі списку або введіть його номер:"
+    )
+    
+    keyboard = create_main_menu()
+    
     await callback.message.edit_text(
-        "Введіть номер тренажера, щоб отримати інструкції 👇"
+        welcome_text,
+        reply_markup=keyboard.as_markup()
     )
     await callback.answer()
 

@@ -21,23 +21,23 @@ router = Router()
 # Дані тренажерів (коди з QR-посилань)
 MACHINES = {
     "tre_001": {
-        "video": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        "video": "https://youtu.be/HxsFneJFM2c?si=zjYUOZCaQftoMiSu",
         "desc": "Біговий тренажер - ідеальний для кардіо тренувань та розминки. Почніть з повільного темпу та поступово збільшуйте швидкість."
     },
     "tre_002": {
-        "video": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        "video": "https://youtube.com/shorts/fgXSA2-o0NM?si=it0UjvB66_sLO3BI",
         "desc": "Силовий тренажер для ніг - розвиває м'язи стегон та сідниць. Налаштуйте вагу відповідно до вашого рівня підготовки."
     },
     "tre_003": {
-        "video": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        "video": "https://youtube.com/shorts/YV1BzmR3m50?si=gIPRhBVHXy99qsIU",
         "desc": "Тренажер для спини - зміцнює широчайші м'язи спини. Тримайте спину рівно та контролюйте рух."
     },
     "tre_004": {
-        "video": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        "video": "https://youtube.com/shorts/qTxF0PhK294?si=l_lS_u8BqfcaQGG7",
         "desc": "Тренажер для грудей - розвиває грудні м'язи та трицепси. Дихайте правильно: видих на зусиллі."
     },
     "tre_005": {
-        "video": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        "video": "https://youtu.be/j38LNpTLwzY?si=I61NsoOvT6_7Q9a4",
         "desc": "Еліптичний тренажер - м'яке кардіо навантаження для всього тіла. Підходить для людей з проблемами суглобів."
     }
 }
@@ -53,16 +53,16 @@ TRAINERS = {
         "url": f"https://wa.me/380966909909?text={quote('Привіт! Хочу записатись на тренування.')}"
     },
     "sergiy_ig": {
-        "name": "Сергій (Instagram)",
-        "url": "https://instagram.com/serhiicoach"
+        "name": "Тетяна (Telegram)",
+        "url": f"https://t.me/fqdtn?text={quote('Добрий день! Хочу записатись на персональне тренування.')}"
     },
     "marina_tg": {
         "name": "Марина (Telegram)",
         "url": f"https://t.me/marina_fitness?text={quote('Привіт! Цікавлять групові тренування. Розкажіть про розклад.')}"
     },
     "volodymyr_wa": {
-        "name": "Володимир (WhatsApp)",
-        "url": f"https://wa.me/380677118555?text={quote('Добрий день! Хочу записатись на персональне тренування.')}"
+        "name": "Ксенія (Telegram)",
+        "url": f"https://t.me/Kseshto?text={quote('Добрий день! Хочу записатись на персональне тренування.')}"
     }
 }
 

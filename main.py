@@ -11,7 +11,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # ВАЖЛИВО: Замініть на ваш токен бота від @BotFather
-BOT_TOKEN = "YOUR_BOT_TOKEN_HERE"
+BOT_TOKEN = "8339845737:AAHpUNfSwmk1KOewN1KoRfsOlRYTapHJ1gM"
 
 # Ініціалізація бота та диспетчера
 bot = Bot(token=BOT_TOKEN)
